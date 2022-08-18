@@ -8,7 +8,7 @@
     "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod": "webpack -p",
-    "build": "webpack"
+    "build": "webpack --config webpack.config.cjs"
   },
   "repository": {
     "type": "git",
