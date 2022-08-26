@@ -8,7 +8,7 @@
 
     <title>RSS агрегатор</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -18,14 +18,14 @@
         </div>
         <div class="modal-body text-break"></div>
         <div class="modal-footer">
+          <a class="btn btn-primary readfull full-article" href="none" role="button" target="_blank" rel="noopener noreferrer">Читать полностью</a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-          <a class="btn btn-primary full-article" href="none" role="button" target="_blank" rel="noopener noreferrer">Читать полностью</a>
         </div>
       </div>
     </div>
   </div>
 
-  <main>
+  <main class="flex-grow-1">
   <div class="block bg-dark">
     <div class="container" data-container="rss-link">
       <div class="row">
@@ -48,7 +48,7 @@
         </div>
       </form>
       <p class="text-muted" data-toggle="hint">Пример: https://ru.hexlet.io/lessons.rss</p>
-      <p class="small" data-toggle="feedbackText"></p>
+      <p class="small feedbackText" data-toggle="feedbackText"></p>
     </div>
   </div>
   <div class="container">
@@ -58,9 +58,9 @@
     </div>
   </div>
 </main>
-  <footer class="footer border-top fixed-bottom bg-light">
-    <div class="row">
-      <div class="text-center">
+  <footer class="footer border-top mt-5 bg-light">
+      <div class="container-xl">
+        <div class="text-center">
         created by 
         <a class="creator" href="https://github.com/hawkprimarch" target="_blank">hawkprimarch</a>
       </div>

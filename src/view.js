@@ -46,7 +46,7 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   const elements = selectors;
   elements.feedContainer.innerHTML = '';
   const feedCard = document.createElement('div');
-  feedCard.classList.add('card-body');
+  feedCard.classList.add('card-body-feeds');
   const feedTittle = document.createElement('h3');
   feedTittle.textContent = i18nInstance.t('feeds');
   feedCard.append(feedTittle);
@@ -57,10 +57,11 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   ulElement.classList.add('rounded-0');
   state.feeds.map(({ feedTitle, feedDescription }) => {
     const liElement = document.createElement('li');
-    liElement.classList.add('list-group-item');
+    liElement.classList.add('list-group-item-feed');
     const itemTitle = document.createElement('h6');
     itemTitle.textContent = feedTitle;
     const itemDescription = document.createElement('p');
+    itemDescription.classList.add('m-0');
     itemDescription.classList.add('small');
     itemDescription.classList.add('text-black-50');
     itemDescription.textContent = feedDescription;

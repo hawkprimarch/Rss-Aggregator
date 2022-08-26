@@ -1,4 +1,4 @@
-p {
+.text_rss {
   color: white;
   font-weight: 100;
 }
@@ -22,8 +22,8 @@ h5 {
 .container {
   padding-top: 40px;
   padding-bottom: 1.5rem;
-  height: 300px;
   width: 60%;
+  min-height: 100%;
 }
   
 .modal-title {
@@ -65,6 +65,7 @@ ul {
 .footer {
   margin-top: 20px;
   padding: 15px 0px;
+  display: block !important;
 }
 
 .form-control {
@@ -77,9 +78,55 @@ ul {
 }
 
 .addbtn:hover {
-  background-color: rgb(49, 62, 255);
+  background-color: #0B5ED7;
 }
 
+.creator {
+  font-weight: 400 !important;
+}
 .creator:hover {
-  color: rgb(61, 74, 255);
+  color: #0B5ED7;
+}
+
+.list-group-item {
+  border: 0px !important;
+  padding: 0.5rem 0rem !important;
+}
+
+.card-body {
+  padding: 1rem 0rem !important;
+}
+
+.feedbackText {
+  font-weight: 400;
+}
+
+.readfull {
+  font-weight: 400 !important;
+}
+
+.card-body-feeds {
+  padding: 1rem 1.5rem !important;
+}
+
+.list-group-item-feed {
+  padding: 0.5rem 1.5rem !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+.min-vh-100 {
+  min-height: 100vh !important;
+}
+.d-flex {
+  display: flex !important;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
 }
