@@ -3,6 +3,10 @@ import i18next from 'i18next';
 import controller from './controller.js';
 import ru from './locales/ru.js';
 
+import {
+  formRender, postsRender, UIRender, renderFeeds,
+} from './view.js';
+
 const runApp = () => {
   const defaultLanguage = 'ru';
   const state = {
@@ -16,6 +20,8 @@ const runApp = () => {
     posts: [],
   };
 
+  const uiState = {};
+
   const i18nInstance = i18next.createInstance();
   i18nInstance.init({
     lng: state.lng,
@@ -27,22 +33,28 @@ const runApp = () => {
 
   const selectors = {
     formElement: document.querySelector('.rss-form'),
-    formInput: document.querySelector('#url-input'),
-    submitButton: document.querySelector('button[type="submit"'),
-    feedbackElement: document.querySelector('[data-toggle="feedbackText"]'),
+    inputElement: document.querySelector('#url-input'),
+    submitButton: document.querySelector('button[type="submit"]'),
+    notificationElement: document.querySelector('[data-toggle="feedbackText"]'),
     feedContainer: document.querySelector('[data-container="feeds"]'),
-    postsContainer: document.querySelector('[data-container="posts"'),
+    postsContainer: document.querySelector('[data-container="posts"]'),
   };
 
-  console.log(selectors.formInput);
+  const watchedUIState = onChange(uiState, () => {
+    UIRender(uiState);
+  });
 
-  const watchedState = onChange(state, (path, value) => {
+  const watchedState = onChange(state, (path) => {
     switch (path) {
       case 'rssForm.state':
-        selectors.feedbackElement.textContent = value;
-        if (value === 'unsuccessfulLoad') {
-          selectors.formInput.classList.add('fail');
-        }
+        formRender(state, selectors, i18nInstance);
+        break;
+      case 'feeds':
+        renderFeeds(state, selectors, i18nInstance);
+        break;
+      case 'posts':
+        postsRender(state, selectors, watchedUIState, i18nInstance);
+        UIRender(uiState);
         break;
       default:
     }

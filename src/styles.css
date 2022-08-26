@@ -71,19 +71,15 @@ ul {
   padding: 17px 15px;
 }
 
-.btn {
+.addbtn {
   padding: 15px 2.5rem;
   font-size: 1.15rem;
 }
 
-.btn:hover {
+.addbtn:hover {
   background-color: rgb(49, 62, 255);
 }
 
 .creator:hover {
   color: rgb(61, 74, 255);
-}
-
-.fail {
-    border: 2px solid red;
 }
