@@ -18,7 +18,7 @@
         </div>
         <div class="modal-body text-break"></div>
         <div class="modal-footer">
-          <a class="btn btn-primary readfull full-article" href="none" role="button" target="_blank" rel="noopener noreferrer">Читать полностью</a>
+          <a class="btn btn-primary readfull full-article" role="button" target="_blank" rel="noopener noreferrer">Читать полностью</a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
         </div>
       </div>
@@ -38,9 +38,9 @@
       </div>
       <form class="rss-form text-body">
         <div class="row form-row">
-          <div class="col-9">
-            <label for="url-input" class="form-label sr-only">Ссылка RSS</label>
-            <input name="url" type="text" class="form-control" id="url-input" aria-label="url" placeholder="Ссылка RSS">
+          <div class="col-9 form-floating">
+            <input id="url-input" autofocus="" required="" name="url" aria-label="url" class="form-control w-100" placeholder="ссылка RSS" autocomplete="off">
+            <label for="url-input">Ссылка RSS</label>
           </div>
           <div class="col-3">
             <button type="submit" class="btn addbtn btn-primary" aria-label="add">Добавить</button>

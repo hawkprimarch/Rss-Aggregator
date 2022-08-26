@@ -86,13 +86,13 @@ const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
 
   const postUlElement = document.createElement('ul');
   state.posts.map(({
-    link, title, postId, description,
+    postlink, title, postId, description,
   }) => {
     const liElement = document.createElement('li');
     liElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'border-0', 'border-end-0');
     const itemTitle = document.createElement('a');
     itemTitle.dataset.id = postId;
-    itemTitle.setAttribute('href', link);
+    itemTitle.setAttribute('href', postlink);
     itemTitle.setAttribute('target', '_blank');
     itemTitle.textContent = title;
     liElement.append(itemTitle);
@@ -110,7 +110,7 @@ const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
       ui[e.target.dataset.id] = 'shown';
     });
     buttonEl.addEventListener('click', (e) => {
-      renderModal(title, link, description);
+      renderModal(title, postlink, description);
       ui[e.target.dataset.id] = 'shown';
     });
     return true;
@@ -134,5 +134,5 @@ const UIRender = (uiState) => {
 };
 
 export {
-  formRender, postsRender, renderModal, UIRender, renderFeeds,
+  formRender, postsRender, UIRender, renderFeeds,
 };

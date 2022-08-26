@@ -58,9 +58,11 @@ const runApp = () => {
         break;
       default:
     }
+    console.log(state)
   });
 
   controller(state, watchedState, selectors);
+  console.log(state)
 };
 
 export default runApp;
