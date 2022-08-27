@@ -4,7 +4,7 @@ import controller from './controller.js';
 import ru from './locales/ru.js';
 
 import {
-  formRender, postsRender, UIRender, renderFeeds,
+  formRender, postsRender, uiRender, renderFeeds,
 } from './view.js';
 
 const runApp = () => {
@@ -18,9 +18,8 @@ const runApp = () => {
     },
     feeds: [],
     posts: [],
+    watchedPosts: {},
   };
-
-  const uiState = {};
 
   const i18nInstance = i18next.createInstance();
   i18nInstance.init({
@@ -40,8 +39,8 @@ const runApp = () => {
     postsContainer: document.querySelector('[data-container="posts"]'),
   };
 
-  const watchedUIState = onChange(uiState, () => {
-    UIRender(uiState);
+  const watchedUIState = onChange(state.watchedPosts, () => {
+    uiRender(state.watchedPosts);
   });
 
   const watchedState = onChange(state, (path) => {
@@ -54,7 +53,7 @@ const runApp = () => {
         break;
       case 'posts':
         postsRender(state, selectors, watchedUIState, i18nInstance);
-        UIRender(uiState);
+        uiRender(state.watchedPosts);
         break;
       default:
     }

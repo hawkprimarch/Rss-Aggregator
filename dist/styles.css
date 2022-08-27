@@ -130,9 +130,11 @@ ul {
 .flex-column {
   flex-direction: column !important;
 }
+
 .min-vh-100 {
   min-height: 100vh !important;
 }
+
 .d-flex {
   display: flex !important;
 }

@@ -31,7 +31,6 @@ const updateFeed = (link, state, watchedState) => {
 export default (state, watchedState, selectors) => {
   const elements = selectors;
   const watched = watchedState;
-  elements.inputElement.focus();
 
   elements.formElement.addEventListener('submit', (e) => {
     e.preventDefault();

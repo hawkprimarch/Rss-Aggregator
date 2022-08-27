@@ -2,7 +2,6 @@ const formRender = (state, selectors, i18nInstance) => {
   const elements = selectors;
   const formState = state.rssForm.state;
   const errors = state.rssForm.errors ? state.rssForm.errors : null;
-
   elements.notificationElement.textContent = '';
   elements.notificationElement.classList.remove('text-danger');
   elements.notificationElement.classList.remove('text-success');
@@ -118,7 +117,7 @@ const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
   elements.postsContainer.append(postUlElement);
 };
 
-const UIRender = (uiState) => {
+const uiRender = (uiState) => {
   const anchors = document.querySelectorAll('a');
   anchors.forEach((anchor) => {
     if (uiState[anchor.dataset.id] === 'shown') {
@@ -134,5 +133,5 @@ const UIRender = (uiState) => {
 };
 
 export {
-  formRender, postsRender, UIRender, renderFeeds,
+  formRender, postsRender, uiRender, renderFeeds,
 };
