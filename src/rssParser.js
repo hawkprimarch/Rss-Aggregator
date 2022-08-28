@@ -19,6 +19,5 @@ export default (xmlString) => {
     return { feedTitle, feedDescription, posts };
   }
 
-  const parsingError = data.querySelector('parsererror').textContent;
-  throw new Error(parsingError);
+  throw new Error('parsingError');
 };
