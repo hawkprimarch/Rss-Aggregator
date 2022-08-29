@@ -72,9 +72,25 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   elements.feedContainer.append(ulElement);
 };
 
-const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
+const callbackRender = (state, itemTitle, buttonEl, watchedUiState) => {
+  const ui = watchedUiState;
+  state.posts.map(({
+    postlink, title, description,
+  }) => {
+    itemTitle.addEventListener('click', (e) => {
+      ui[e.target.dataset.id] = 'shown';
+    });
+    buttonEl.addEventListener('click', (e) => {
+      renderModal(title, postlink, description);
+      ui[e.target.dataset.id] = 'shown';
+    });
+    return true;
+  });
+};
+
+const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
   const elements = selectors;
-  const ui = watchedUIState;
+  const ui = watchedUiState;
   elements.postsContainer.innerHTML = '';
   const postCard = document.createElement('div');
   postCard.classList.add('card-body');
@@ -85,7 +101,7 @@ const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
 
   const postUlElement = document.createElement('ul');
   state.posts.map(({
-    postlink, title, postId, description,
+    postlink, title, postId,
   }) => {
     const liElement = document.createElement('li');
     liElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'border-0', 'border-end-0');
@@ -105,13 +121,7 @@ const postsRender = (state, selectors, watchedUIState, i18nInstance) => {
     liElement.append(buttonEl);
     postUlElement.append(liElement);
 
-    itemTitle.addEventListener('click', (e) => {
-      ui[e.target.dataset.id] = 'shown';
-    });
-    buttonEl.addEventListener('click', (e) => {
-      renderModal(title, postlink, description);
-      ui[e.target.dataset.id] = 'shown';
-    });
+    callbackRender(state, itemTitle, buttonEl, ui);
     return true;
   });
   elements.postsContainer.append(postUlElement);

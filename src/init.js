@@ -112,7 +112,7 @@ const runApp = () => {
     });
   };
 
-  const watchedUIState = onChange(state.watchedPosts, () => {
+  const watchedUiState = onChange(state.watchedPosts, () => {
     uiRender(state.watchedPosts);
   });
 
@@ -125,7 +125,7 @@ const runApp = () => {
         renderFeeds(state, selectors, i18nInstance);
         break;
       case 'posts':
-        postsRender(state, selectors, watchedUIState, i18nInstance);
+        postsRender(state, selectors, watchedUiState, i18nInstance);
         uiRender(state.watchedPosts);
         break;
       default:
