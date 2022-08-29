@@ -72,20 +72,17 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   elements.feedContainer.append(ulElement);
 };
 
-const callbackRender = (state, itemTitle, buttonEl, watchedUiState) => {
+const callbackRender = (itemTitle, buttonEl, watchedUiState, modalData) => {
   const ui = watchedUiState;
-  state.posts.map(({
-    postlink, title, description,
-  }) => {
-    itemTitle.addEventListener('click', (e) => {
-      ui[e.target.dataset.id] = 'shown';
-    });
-    buttonEl.addEventListener('click', (e) => {
-      renderModal(title, postlink, description);
-      ui[e.target.dataset.id] = 'shown';
-    });
-    return true;
+  const { postlink, title, description } = modalData;
+  itemTitle.addEventListener('click', (e) => {
+    ui[e.target.dataset.id] = 'shown';
   });
+  buttonEl.addEventListener('click', (e) => {
+    renderModal(title, postlink, description);
+    ui[e.target.dataset.id] = 'shown';
+  });
+  return true;
 };
 
 const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
@@ -101,7 +98,7 @@ const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
 
   const postUlElement = document.createElement('ul');
   state.posts.map(({
-    postlink, title, postId,
+    postlink, title, postId, description,
   }) => {
     const liElement = document.createElement('li');
     liElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'border-0', 'border-end-0');
@@ -120,8 +117,11 @@ const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
     buttonEl.textContent = i18nInstance.t('view');
     liElement.append(buttonEl);
     postUlElement.append(liElement);
+    const modalData = {
+      postlink, title, postId, description,
+    };
 
-    callbackRender(state, itemTitle, buttonEl, ui);
+    callbackRender(itemTitle, buttonEl, ui, modalData);
     return true;
   });
   elements.postsContainer.append(postUlElement);
