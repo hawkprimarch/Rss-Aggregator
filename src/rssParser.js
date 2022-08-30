@@ -19,6 +19,5 @@ export default (xmlString) => {
     return { feedTitle, feedDescription, posts };
   }
 
-
   throw new Error('parsingError');
 };
