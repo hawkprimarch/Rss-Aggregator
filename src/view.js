@@ -54,7 +54,7 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   ulElement.classList.add('list-group');
   ulElement.classList.add('border-0');
   ulElement.classList.add('rounded-0');
-  state.feeds.map(({ feedTitle, feedDescription }) => {
+  state.feeds.forEach(({ feedTitle, feedDescription }) => {
     const liElement = document.createElement('li');
     liElement.classList.add('list-group-item-feed');
     const itemTitle = document.createElement('h6');
@@ -67,7 +67,6 @@ const renderFeeds = (state, selectors, i18nInstance) => {
     liElement.append(itemTitle);
     liElement.append(itemDescription);
     ulElement.append(liElement);
-    return true;
   });
   elements.feedContainer.append(ulElement);
 };
@@ -82,7 +81,6 @@ const callbackRender = (itemTitle, buttonEl, watchedUiState, modalData) => {
     renderModal(title, postlink, description);
     ui[e.target.dataset.id] = 'shown';
   });
-  return true;
 };
 
 const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
@@ -97,7 +95,7 @@ const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
   elements.postsContainer.append(postCard);
 
   const postUlElement = document.createElement('ul');
-  state.posts.map(({
+  state.posts.forEach(({
     postlink, title, postId, description,
   }) => {
     const liElement = document.createElement('li');
@@ -122,7 +120,6 @@ const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
     };
 
     callbackRender(itemTitle, buttonEl, ui, modalData);
-    return true;
   });
   elements.postsContainer.append(postUlElement);
 };
