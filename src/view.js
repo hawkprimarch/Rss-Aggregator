@@ -69,14 +69,14 @@ const renderFeeds = (state, selectors, i18nInstance) => {
   selectors.feedContainer.append(ulElement);
 };
 
-const callbackRender = (itemTitle, buttonEl, watchedState, modalData) => {
+const callbackRender = (itemTitle, buttonEl, watchedUiState, modalData) => {
   const { postlink, title, description } = modalData;
   itemTitle.addEventListener('click', (e) => {
-    watchedState.push(e.target.dataset.id);
+    watchedUiState.push(e.target.dataset.id);
   });
   buttonEl.addEventListener('click', (e) => {
     renderModal(title, postlink, description);
-    watchedState.push(e.target.dataset.id);
+    watchedUiState.push(e.target.dataset.id);
   });
 };
 
