@@ -16,12 +16,13 @@ const runApp = () => {
     lng: defaultLanguage,
     rssForm: {
       state: null,
-      inputStatus: 'unblocked',
       errors: {},
     },
     feeds: [],
     posts: [],
-    watchedPosts: {},
+    uiState: {
+      watchedPosts: [],
+    },
   };
 
   const i18nInstance = i18next.createInstance();
@@ -85,39 +86,37 @@ const runApp = () => {
           .map(({ title, description, postlink }) => ({
             feedId: currentFeedId, postId: uniqueId(), title, description, postlink,
           }));
-        watched.posts.unshift(...newPosts);
+        if (newPosts.length > 0) {
+          watched.posts.unshift(...newPosts);
+        }
         setTimeout(updateFeed, 5000, link, feedState, watchedState);
       });
   };
 
   const controller = (controllerState, watchedState, controllerSelectors) => {
-    const elements = controllerSelectors;
-    const watched = watchedState;
-
-    elements.formElement.addEventListener('submit', (e) => {
+    controllerSelectors.formElement.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
       const rss = formData.get('url');
-      watched.rssForm.state = 'processing';
+      watchedState.rssForm.state = 'processing';
       validate(rss, controllerState)
         .then(() => updateFeed(rss, controllerState, watchedState))
         .then(() => {
-          watched.rssForm.errors = null;
-          watched.rssForm.state = 'successLoad';
+          watchedState.rssForm.errors = null;
+          watchedState.rssForm.state = 'successLoad';
         })
         .catch((error) => {
-          watched.rssForm.errors = error.message;
-          watched.rssForm.state = 'unsuccessfulLoad';
+          watchedState.rssForm.errors = error.message;
+          watchedState.rssForm.state = 'unsuccessfulLoad';
         });
     });
   };
 
-  const watchedUiState = onChange(state.watchedPosts, () => {
-    uiRender(state.watchedPosts);
-  });
-
   const watchedState = onChange(state, (path) => {
     switch (path) {
+      case 'uiState.watchedPosts':
+        uiRender(state.uiState.watchedPosts);
+        break;
       case 'rssForm.state':
         formRender(state, selectors, i18nInstance);
         break;
@@ -125,8 +124,8 @@ const runApp = () => {
         renderFeeds(state, selectors, i18nInstance);
         break;
       case 'posts':
-        postsRender(state, selectors, watchedUiState, i18nInstance);
-        uiRender(state.watchedPosts);
+        postsRender(state, selectors, watchedState.uiState.watchedPosts, i18nInstance);
+        uiRender(state.uiState.watchedPosts);
         break;
       default:
     }

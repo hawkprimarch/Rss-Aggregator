@@ -1,34 +1,33 @@
 const formRender = (state, selectors, i18nInstance) => {
-  const elements = selectors;
   const formState = state.rssForm.state;
   const errors = state.rssForm.errors ? state.rssForm.errors : null;
-  elements.notificationElement.textContent = '';
-  elements.notificationElement.classList.remove('text-danger');
-  elements.notificationElement.classList.remove('text-success');
-  elements.inputElement.classList.remove('is-invalid');
-  elements.inputElement.focus();
+  selectors.notificationElement.textContent = '';
+  selectors.notificationElement.classList.remove('text-danger');
+  selectors.notificationElement.classList.remove('text-success');
+  selectors.inputElement.classList.remove('is-invalid');
+  selectors.inputElement.focus();
 
   switch (formState) {
     case 'processing':
-      elements.submitButton.disabled = true;
-      elements.inputElement.setAttribute('readonly', 'true');
+      selectors.submitButton.disabled = true;
+      selectors.inputElement.setAttribute('readonly', 'true');
       break;
     case 'successLoad':
-      elements.notificationElement.classList.add('text-success');
-      elements.notificationElement.textContent = i18nInstance.t(formState);
-      elements.inputElement.value = '';
-      elements.submitButton.disabled = false;
-      elements.inputElement.removeAttribute('readonly');
+      selectors.notificationElement.classList.add('text-success');
+      selectors.notificationElement.textContent = i18nInstance.t(formState);
+      selectors.inputElement.value = '';
+      selectors.submitButton.disabled = false;
+      selectors.inputElement.removeAttribute('readonly');
       break;
     case 'unsuccessfulLoad':
-      elements.notificationElement.classList.add('text-danger');
-      elements.inputElement.classList.add('is-invalid');
-      elements.notificationElement.textContent = i18nInstance.t(errors);
-      elements.submitButton.disabled = false;
-      elements.inputElement.removeAttribute('readonly');
+      selectors.notificationElement.classList.add('text-danger');
+      selectors.inputElement.classList.add('is-invalid');
+      selectors.notificationElement.textContent = i18nInstance.t(errors);
+      selectors.submitButton.disabled = false;
+      selectors.inputElement.removeAttribute('readonly');
       break;
     default:
-      break;
+      throw new Error('unknownState');
   }
 };
 
@@ -42,14 +41,13 @@ const renderModal = (title, link, description) => {
 };
 
 const renderFeeds = (state, selectors, i18nInstance) => {
-  const elements = selectors;
-  elements.feedContainer.innerHTML = '';
+  selectors.feedContainer.innerHTML = '';
   const feedCard = document.createElement('div');
   feedCard.classList.add('card-body-feeds');
   const feedTittle = document.createElement('h3');
   feedTittle.textContent = i18nInstance.t('feeds');
   feedCard.append(feedTittle);
-  elements.feedContainer.append(feedCard);
+  selectors.feedContainer.append(feedCard);
   const ulElement = document.createElement('ul');
   ulElement.classList.add('list-group');
   ulElement.classList.add('border-0');
@@ -68,31 +66,28 @@ const renderFeeds = (state, selectors, i18nInstance) => {
     liElement.append(itemDescription);
     ulElement.append(liElement);
   });
-  elements.feedContainer.append(ulElement);
+  selectors.feedContainer.append(ulElement);
 };
 
-const callbackRender = (itemTitle, buttonEl, watchedUiState, modalData) => {
-  const ui = watchedUiState;
+const callbackRender = (itemTitle, buttonEl, watchedState, modalData) => {
   const { postlink, title, description } = modalData;
   itemTitle.addEventListener('click', (e) => {
-    ui[e.target.dataset.id] = 'shown';
+    watchedState.push(e.target.dataset.id);
   });
   buttonEl.addEventListener('click', (e) => {
     renderModal(title, postlink, description);
-    ui[e.target.dataset.id] = 'shown';
+    watchedState.push(e.target.dataset.id);
   });
 };
 
 const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
-  const elements = selectors;
-  const ui = watchedUiState;
-  elements.postsContainer.innerHTML = '';
+  selectors.postsContainer.innerHTML = '';
   const postCard = document.createElement('div');
   postCard.classList.add('card-body');
   const postTittle = document.createElement('h3');
   postTittle.textContent = i18nInstance.t('posts');
   postCard.append(postTittle);
-  elements.postsContainer.append(postCard);
+  selectors.postsContainer.append(postCard);
 
   const postUlElement = document.createElement('ul');
   state.posts.forEach(({
@@ -119,15 +114,15 @@ const postsRender = (state, selectors, watchedUiState, i18nInstance) => {
       postlink, title, postId, description,
     };
 
-    callbackRender(itemTitle, buttonEl, ui, modalData);
+    callbackRender(itemTitle, buttonEl, watchedUiState, modalData);
   });
-  elements.postsContainer.append(postUlElement);
+  selectors.postsContainer.append(postUlElement);
 };
 
 const uiRender = (uiState) => {
   const anchors = document.querySelectorAll('a');
   anchors.forEach((anchor) => {
-    if (uiState[anchor.dataset.id] === 'shown') {
+    if (uiState.includes(anchor.dataset.id)) {
       anchor.classList.remove('fw-bold');
       anchor.classList.add('fw-normal');
       anchor.classList.add('link-secondary');
