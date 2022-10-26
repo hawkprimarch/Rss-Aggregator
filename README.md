@@ -1,4 +1,4 @@
-![alt text](https://i.ibb.co/5nW0fNL/rss-aggregator.png)
+![rss-aggregator](https://user-images.githubusercontent.com/101742125/198060252-9b7dd793-037c-47b1-a984-d2b5817c9ad1.png)
 
 # JavaScript Проект - «RSS агрегатор»
 
